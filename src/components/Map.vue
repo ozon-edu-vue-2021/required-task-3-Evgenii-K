@@ -44,9 +44,10 @@ export default {
     mounted() {
         this.svg = d3.select(this.$refs.svg)
         this.g = this.svg.select('g')
-        this.tables = tables
         this.tableSVG = d3.select(this.$refs.table)
         this.legend = legend
+        this.tables = tables
+        this.upDateLegend()
 
         if(this.g) {
             this.drowTables()
@@ -87,6 +88,13 @@ export default {
             } else {
                 this.$emit('click', null)
             }
+        },
+        upDateLegend() {
+            this.legend.map(group => group.counter = 0)
+
+            this.legend.map(group => {
+                group.counter = this.tables.filter(tabel => tabel.group_id === group.group_id).length
+            })
         }
     }
 };
