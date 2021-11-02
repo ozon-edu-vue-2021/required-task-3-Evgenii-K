@@ -25,7 +25,6 @@ import TableSVG from '@/assets/images/workPlace.svg'
 import * as d3 from 'd3'
 import tables from '@/assets/data/tables.json'
 import legend from '@/assets/data/legend.json'
-import people from '@/assets/data/people.json'
 
 export default {
     data() {
@@ -35,7 +34,6 @@ export default {
             g: null,
             tables: [],
             tableSVG: null,
-            people: null,
             legend: null
         };
     },
@@ -49,7 +47,6 @@ export default {
         this.tables = tables
         this.tableSVG = d3.select(this.$refs.table)
         this.legend = legend
-        this.people = people
 
         if(this.g) {
             this.drowTables()
@@ -84,10 +81,11 @@ export default {
             })
         },
         showEmployeeInfo(event) {
-            const employeeId = event.target.closest('.employer-place').id
-            if (employeeId) {
-                const info = this.people.find(employee => employee._id = employeeId)
-                console.log(info)
+            const employeeId = event.target.closest('.employer-place')
+            if(employeeId) {
+                this.$emit('click', employeeId)
+            } else {
+                this.$emit('click', null)
             }
         }
     }
