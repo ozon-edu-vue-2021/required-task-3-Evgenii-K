@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { parseISO, format } from 'date-fns'
+
 export default {
     props: {
         person: {
@@ -30,7 +32,13 @@ export default {
     },
     computed: {
         formatedDate() {
-            return this.person.registered;
+            const formatToISO = parseISO(this.person.registered)
+            
+            if (formatToISO) {
+                return format(formatToISO, 'MM.dd.yyyy')
+            } else {
+                return ''
+            }
         },
     },
 };
