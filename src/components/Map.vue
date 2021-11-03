@@ -69,7 +69,7 @@ export default {
                 svgTable
                     .append('g')
                     .attr('transform', `rotate(${table.rotate || 0})`)
-                    .attr('group_id', table._id)
+                    .attr('group_id', table.group_id)
                     .html(this.tableSVG.html())
                     .attr(
                         'fill',
@@ -83,8 +83,11 @@ export default {
         },
         showEmployeeInfo(event) {
             const employeeId = event.target.closest('.employer-place')
+
             if(employeeId) {
-                this.$emit('click', employeeId)
+                const group_id = employeeId.firstChild?.getAttribute('group_id') || null
+                const group_name = legend.find((it) => it.group_id == group_id).text        
+                this.$emit('click', employeeId, group_name)
             } else {
                 this.$emit('click', null)
             }
