@@ -34,16 +34,16 @@ export default {
         }
     },
     methods: {
-        findPerson(employeeId, group_name) {
+        findPerson(employeeId, groupName) {
             if (!employeeId) return this.isUserOpenned = false
 
             if (employeeId.id) {
                 this.person = this.people.find(employee => employee._id == employeeId.id)
 
-                if (group_name) {
-                    this.person.group = group_name
+                if (groupName) {
+                    this.person.group = groupName
                 } else {
-                    this.group_name = null
+                    this.person.group = null
                 }
 
                 this.isUserOpenned = true

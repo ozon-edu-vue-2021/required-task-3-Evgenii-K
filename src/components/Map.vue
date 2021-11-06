@@ -1,7 +1,6 @@
 <template>
     <div class="map">
         <h3>Карта офиса</h3>
-
         <div
             v-if="!isLoading"
             class="map-root"
@@ -59,7 +58,7 @@ export default {
         drowTables() {
             const svgTablesGroup = this.g.append('g').classed('groupPlacese', true)
 
-            this.tables.map((table) => {
+            this.tables.forEach((table) => {
                 const svgTable = svgTablesGroup
                     .append('g')
                     .attr('transform', `translate(${table.x}, ${table.y}), scale(0.5)`)
@@ -77,17 +76,15 @@ export default {
                         ??
                         'transparent'
                     )
-
-                
             })
         },
         showEmployeeInfo(event) {
             const employeeId = event.target.closest('.employer-place')
 
             if(employeeId) {
-                const group_id = employeeId.firstChild?.getAttribute('group_id') || null
-                const group_name = legend.find((it) => it.group_id == group_id).text        
-                this.$emit('click', employeeId, group_name)
+                const groupId = employeeId.firstChild?.getAttribute('group_id') || null
+                const groupName = legend.find((it) => it.group_id == groupId).text        
+                this.$emit('click', employeeId, groupName)
             } else {
                 this.$emit('click', null)
             }
