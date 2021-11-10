@@ -23,9 +23,10 @@
                 class="legend"
             >
                 <div class="legend__data">
-                    <div
+                    <draggable 
                         v-if="legend.length > 0"
                         class="legend__items"
+                        :legend="legend"
                     >
                         <LegendItem
                             v-for="(item, index) in legend"
@@ -35,7 +36,7 @@
                             :counter="item.counter"
                             class="legend__item"
                         />
-                    </div>
+                    </draggable>
                     <span
                         v-else
                         class="legend--empty"
@@ -44,7 +45,7 @@
                     </span>
                 </div>
                 <div class="legend__chart">
-                    <!-- chart -->
+                    <MakeChart/>
                 </div>
             </div>
             <div
@@ -58,7 +59,10 @@
                     Место пустое
                 </div>
 
-                <PersonCard :person="person" />
+                <PersonCard 
+                    v-else
+                    :person="person" 
+                />
             </div>
         </div>
     </div>
@@ -68,6 +72,8 @@
 import LegendItem from "./SideMenu/LegendItem.vue";
 import PersonCard from "./SideMenu/PersonCard.vue";
 import legend from "@/assets/data/legend.json";
+import Draggable from 'vuedraggable'
+import MakeChart from './SideMenu/MaceChart.vue'
 
 export default {
     props: {
@@ -83,6 +89,8 @@ export default {
     components: {
         LegendItem,
         PersonCard,
+        Draggable,
+        MakeChart,
     },
     data() {
         return {

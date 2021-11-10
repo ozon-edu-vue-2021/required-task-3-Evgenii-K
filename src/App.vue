@@ -1,8 +1,13 @@
 <template>
     <div id="app">
         <div class="office">
-            <Map />
-            <SideMenu />
+            <Map 
+                @click="findPerson"
+            />
+            <SideMenu 
+                :isUserOpenned.sync="isUserOpenned"
+                :person="person"
+            />
         </div>
     </div>
 </template>
@@ -10,13 +15,41 @@
 <script>
 import Map from "./components/Map.vue";
 import SideMenu from "./components/SideMenu.vue";
+import people from '@/assets/data/people.json'
 
 export default {
-  name: "App",
-  components: {
-    Map,
-    SideMenu,
-  },
+    name: "App",
+    components: {
+        Map,
+        SideMenu,
+    },
+    mounted() {
+        this.people = people
+    },
+    data() {
+        return {
+            isUserOpenned: false,
+            people: null,
+            person: null
+        }
+    },
+    methods: {
+        findPerson(employeeId, groupName) {
+            if (!employeeId) return this.isUserOpenned = false
+
+            if (employeeId.id) {
+                this.person = this.people.find(employee => employee._id == employeeId.id)
+
+                if (groupName) {
+                    this.person.group = groupName
+                } else {
+                    this.person.group = null
+                }
+
+                this.isUserOpenned = true
+            }
+        }
+    }
 };
 </script>
 
